@@ -6,7 +6,7 @@ $(function () {
     var voiceProgress;
     var lyric;
 
-    // 1.加载歌曲列表
+    // 加载歌曲列表
     getPlayerList();
     function getPlayerList() {
         //Chrome的安全机制不能支持ajax的本地访问
@@ -32,7 +32,7 @@ $(function () {
         });
     }
 
-    // 2.初始化歌曲信息
+    // 初始化歌曲信息
     function initMusicInfo(music){
         // 获取对应的元素
         var $musicImage = $(".song_info_pic images");
@@ -53,7 +53,7 @@ $(function () {
         $musicBg.css("background", "url('"+music.cover+"')");
     }
 
-    // 3.初始化歌词信息
+    // 初始化歌词信息
     function initMusicLyric(music){
         lyric = new Lyric(music.link_lrc);
         var $lryicContainer = $(".song_lyric");
@@ -68,7 +68,7 @@ $(function () {
         });
     }
 
-    // 4.初始化进度条
+    // 初始化进度条
     initProgress();
     function initProgress(){
         var $progressBar = $(".music_progress_bar");
@@ -95,10 +95,10 @@ $(function () {
         });
     }
 
-    // 5.初始化事件监听
+    // 初始化事件监听
     initEvents();
     function initEvents() {
-        // 1.监听歌曲的移入移出事件
+        // 监听歌曲的移入移出事件
         $(".content_list").delegate(".list_music", "mouseenter", function () {
             // 显示子菜单
             $(this).find(".list_menu").stop().fadeIn(100);
@@ -114,21 +114,21 @@ $(function () {
             $(this).find(".list_time span").stop().fadeIn(100);
         });
 
-        // 2.监听复选框的点击事件
+        // 监听复选框的点击事件
         $(".content_list").delegate(".list_check", "click", function () {
             $(this).toggleClass("list_checked");
         });
 
-        // 3.添加子菜单播放按钮的监听
+        // 添加子菜单播放按钮的监听
         var $musicPlay = $(".music_play");
         $(".content_list").delegate(".list_menu_play", "click", function () {
             var $item = $(this).parents(".list_music");
 
-            // 3.1切换播放图标
+            // 切换播放图标
             $(this).toggleClass("list_menu_play2");
-            // 3.2复原其它的播放图标
+            // 复原其它的播放图标
             $item.siblings().find(".list_menu_play").removeClass("list_menu_play2");
-            // 3.3同步底部播放按钮
+            // 同步底部播放按钮
             if($(this).hasClass("list_menu_play2")){
                 // 当前子菜单的播放按钮是播放状态
                 $musicPlay.addClass("music_play2");
@@ -141,20 +141,20 @@ $(function () {
                 // 让文字不高亮
                 $item.find("div").css("color", "rgba(255,255,255,0.5)");
             }
-            // 3.4切换序号的状态
+            // 切换序号的状态
             $item.find(".list_number").toggleClass("list_number2");
             $item.siblings().find(".list_number").removeClass("list_number2");
 
-            // 3.5播放音乐
+            // 播放音乐
             player.playMusic($item.get(0).index, $item.get(0).music);
 
-            // 3.5切换歌曲信息
+            // 切换歌曲信息
             initMusicInfo($item.get(0).music);
-            // 3.6切换歌词信息
+            // 切换歌词信息
             initMusicLyric($item.get(0).music);
         });
 
-        // 4.监听底部控制区域播放按钮的点击
+        // 监听底部控制区域播放按钮的点击
         $musicPlay.click(function () {
             // 判断有没有播放过音乐
             if(player.currentIndex == -1){
@@ -166,17 +166,17 @@ $(function () {
             }
         });
 
-        // 5.监听底部控制区域上一首按钮的点击
+        // 监听底部控制区域上一首按钮的点击
         $(".music_pre").click(function () {
             $(".list_music").eq(player.preIndex()).find(".list_menu_play").trigger("click");
         });
 
-        // 6.监听底部控制区域下一首按钮的点击
+        // 监听底部控制区域下一首按钮的点击
         $(".music_next").click(function () {
             $(".list_music").eq(player.nextIndex()).find(".list_menu_play").trigger("click");
         });
         
-        // 7.监听删除按钮的点击
+        // 监听删除按钮的点击
         $(".content_list").delegate(".list_menu_del", "click", function () {
             // 找到被点击的音乐
             var $item = $(this).parents(".list_music");
@@ -196,7 +196,7 @@ $(function () {
             });
         });
 
-        // 8.监听播放的进度
+        // 监听播放的进度
         player.musicTimeUpdate(function (currentTime, duration, timeStr) {
             // 同步时间
             $(".music_progress_time").text(timeStr);
@@ -217,7 +217,7 @@ $(function () {
             });
         });
         
-        // 9.监听声音按钮的点击
+        // 监听声音按钮的点击
         $(".music_voice_icon").click(function () {
             // 图标切换
             $(this).toggleClass("music_voice_icon2");
